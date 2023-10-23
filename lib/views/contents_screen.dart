@@ -2,37 +2,54 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pedagogik_mahorat/components/app_text.dart';
 import 'package:pedagogik_mahorat/constants/color.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:pedagogik_mahorat/main.dart';
 import 'package:pedagogik_mahorat/views/pdf_screen.dart';
 
+import '../model/pdf_model.dart';
 import '../service/pdf_api.dart';
 
 class ContentsScreen extends StatelessWidget {
   ContentsScreen({super.key});
 
-  final contentList = [
-    "Kirish",
-    "Fan bo‘yicha reyting ishlanmasi va baholash mezoni",
-    "'Pedagogik  mahorat'  fani bo‘yicha ta’lim texnologiyalarini ishlab chiqishning konseptual asoslari",
-    "1-mavzu. Pedagogik mahorat haqida tushuncha, uning o‘qituvchi faoliyatida tutgan o‘rni va ahamiyati Pedagogik fikr tarixi va maktab amaliyotida o‘qituvchi mahorati masalalari",
-    "2-mavzu.O‘qituvchi faoliyatida pedagogik qobiliyati",
-    "3-mavzu. O‘qituvchining kommunikativ qobiliyati",
-    "4-mavzu: O‘qituvchi faoliyatida muloqot madaniyati va psixologiyasi",
-    "5-mavzu: O‘qituvchi va o‘quvchi o‘rtasidagi muloqot",
-    "6-mavzu: Pedagogik nazokat va odob-axloq",
-    "7-mavzu: Pedagogik texnika pedagogik mahoratning tarkibiy qismi sifatida",
-    "8-mavzu. O‘qituvchining nutq mahorati",
-    "9-mavzu: O‘qituvchining ta’lim jarayonidagi mahorati",
-    "10-mavzu: O‘qituvchining tarbiyachilik mahorati",
-    "11-mavzu: O‘qituvchining tarbiya texnologiyalari asosida faoliyat olib borishi",
-    "12-mavzu: O‘qituvchining pedagogik faoliyatida kompyuter texnologiyalaridan foydalanish",
-    "13--mavzu Ilg‘or pedagogik tajribani to‘plash va ommalashtirish",
-    "Kirish",
-    "Kirish",
-    "Kirish",
-    "Kirish",
-    "Glossariy",
+  final List<PdfModel> contentList = [
+    PdfModel(title: "KIRISH", path: ""),
+    PdfModel(
+        title:
+            "PEDAGOGIK MAHORAT HAQIDA  TUSHUNCHA, UNING  O‘QITUVCHI FAOLIYATIDA TUTGAN  O’RNI",
+        path: "/mavzu1.pdf"),
+    PdfModel(
+        title: "O‘QITUVCHI FAOLIYATIDA PEDAGOGIK QOBILIYAT",
+        path: "/mavzu2.pdf"),
+    PdfModel(
+        title: "O‘QITUVCHINING  KOMMUNIKATIV QOBILIYATI", path: "/mavzu3.pdf"),
+    PdfModel(
+        title: "O‘QITUVCHI FAOLIYATIDA MULOQOT  MADANIYATI VA PSIXOLOGIYASI",
+        path: "/mavzu4.pdf"),
+    PdfModel(
+        title: "O‘QITUVCHI VA O‘QUVCHI O‘RTASIDAGI MULOQOT",
+        path: "/mavzu5.pdf"),
+    PdfModel(title: "PEDAGOGIK  NAZOKAT VA ODOB-AXLOQ", path: "/mavzu6.pdf"),
+    PdfModel(
+        title:
+            "PEDAGOGIK TEXNIKA HAQIDA TUSHUNCHA,  PEDAGOGIK TEXNIKANI SHAKLLANTIRISH USLUBLARI",
+        path: "/mavzu7.pdf"),
+    PdfModel(
+        title: "NUTQ TEXNIKASI VA NOTIQLIK MADANIYATI", path: "/mavzu8.pdf"),
+    PdfModel(
+        title: "O’QITUVCHINING TA’LIM JARAYONIDAGI MAHORATI",
+        path: "/mavzu9.pdf"),
+    PdfModel(
+        title: "O’QITUVCHINING TARBIYACHI SIFTIDAGI MAHORATI",
+        path: "/mavzu10.pdf"),
+    PdfModel(
+        title: "O’Z-O’ZINI  TARBIYALASH VA O’Z USTIDA ISHLASH",
+        path: "/mavzu11.pdf"),
+    PdfModel(
+        title: "O’QITUVCHINING OTA-ONALAR BILAN ISHLASH", path: "/mavzu12.pdf"),
+    PdfModel(
+        title: "ILG’OR PEDAGOGIK TAJRIBANI TO’PLASH VA OMMALASHTIRISH TIZIMI",
+        path: "/mavzu13.pdf"),
+    PdfModel(title: "FOYDALANILGAN ADABIYOTLAR", path: ""),
   ];
 
   @override
@@ -55,8 +72,12 @@ class ContentsScreen extends StatelessWidget {
       body: ListView.builder(
           itemBuilder: (context, index) {
             return _itemContent(
-              title: contentList[index],
-              onPressed: () {_openPdf(path: path)},
+              title: contentList[index].title ?? '',
+              onPressed: () {
+                _openPdf(
+                    path: "assets${contentList[index].path}",
+                    title: contentList[index].title ?? '');
+              },
             );
           },
           itemCount: contentList.length),
@@ -68,7 +89,7 @@ class ContentsScreen extends StatelessWidget {
     required VoidCallback onPressed,
   }) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 18.w, vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.r),
         gradient: const LinearGradient(
@@ -78,6 +99,7 @@ class ContentsScreen extends StatelessWidget {
       child: MaterialButton(
         onPressed: onPressed,
         height: 50.h,
+        padding: EdgeInsets.symmetric(horizontal: 18.w),
         minWidth: ScreenUtil().screenWidth,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
@@ -87,13 +109,11 @@ class ContentsScreen extends StatelessWidget {
           children: [
             Flexible(
               flex: 8,
-              child: AppText(
-                title,
-                size: 14.sp,
-                maxLines: 2,
-                color: AppColor.white,
-                fontWeight: FontWeight.w500,
-              ),
+              child: AppText(title,
+                  size: 13.sp,
+                  maxLines: 2,
+                  color: AppColor.white,
+                  fontWeight: FontWeight.w500),
             ),
             Flexible(
                 flex: 1,
@@ -105,9 +125,12 @@ class ContentsScreen extends StatelessWidget {
     );
   }
 
-  _openPdf({required String path}) async {
+  _openPdf({
+    required String path,
+    required String title,
+  }) async {
     var file = await PDFApi.loadAsset(path: path);
     MyApp.navigatorKey.currentState?.push(MaterialPageRoute(
-        builder: (context) => PdfScreen(filePath: file.path)));
+        builder: (context) => PdfScreen(filePath: file.path, title: title)));
   }
 }

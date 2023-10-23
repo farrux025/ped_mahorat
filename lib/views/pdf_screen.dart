@@ -8,19 +8,22 @@ import '../constants/color.dart';
 
 class PdfScreen extends StatelessWidget {
   final String filePath;
+  final String title;
 
-  const PdfScreen({super.key, required this.filePath});
+  const PdfScreen({
+    super.key,
+    required this.filePath,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var name = basename(filePath);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.backgroundColorMain,
-        centerTitle: true,
-        elevation: 3.sp,
-        title: AppText(name.replaceAll(".pdf", ""),
-            color: Colors.white, size: 16.sp, fontWeight: FontWeight.w500),
+        leading: BackButton(color: AppColor.white),
+        title: AppText(title,
+            color: Colors.white, size: 14.sp, fontWeight: FontWeight.w500),
       ),
       body: PDFView(
         filePath: filePath,
