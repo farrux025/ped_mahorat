@@ -4,6 +4,8 @@ import 'package:pedagogik_mahorat/components/app_text.dart';
 import 'package:pedagogik_mahorat/constants/color.dart';
 import 'package:pedagogik_mahorat/main.dart';
 import 'package:pedagogik_mahorat/views/contents_screen.dart';
+import 'package:pedagogik_mahorat/views/glossary_screen.dart';
+import 'package:pedagogik_mahorat/views/test_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -48,12 +50,17 @@ class HomeScreen extends StatelessWidget {
                 _itemButtons(
                     title: "Glossary",
                     icon: Icons.my_library_books_outlined,
-                    onPressed: () {}),
+                    onPressed: () =>
+                        MyApp.navigatorKey.currentState?.push(MaterialPageRoute(
+                          builder: (context) => const GlossaryScreen(),
+                        ))),
                 SizedBox(height: 20.h),
                 _itemButtons(
                     title: "Test sinovi",
                     icon: Icons.quiz_outlined,
-                    onPressed: () {}),
+                    onPressed: () => MyApp.navigatorKey.currentState?.push(
+                        MaterialPageRoute(
+                            builder: (context) => const TestScreen()))),
               ],
             ),
           ),
